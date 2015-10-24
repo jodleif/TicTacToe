@@ -1,32 +1,36 @@
 package TicTacToe.GUI;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 /**
  * Created by Jo Øivind Gjernes on 24.10.2015.
  */
 public class ImageLoader
 {
-	public static ImageView lastImageViewFraFil(String filbane)
+
+	public static ImageView loadImageViewFromFile(String filepath)
 	{
 
-		ImageView bildenode = new ImageView();
-		Image bilde = lastBildeFraFil(filbane);
-		if (bilde != null) {
-			bildenode.setImage(bilde);
-			return bildenode;
+		ImageView imageNode = new ImageView();
+		Image image = loadImageFromFile(filepath);
+		if (image != null) {
+			imageNode.setImage(image);
+			return imageNode;
 		}
-		System.err.println("ERROR: Kunne ikke laste bildet.");
+		System.err.println("ERROR: Error loading image: " + filepath);
 		return null;
 	}
 
-	public static Image lastBildeFraFil(String filbane)
+	public static Image loadImageFromFile(String filepath)
 	{
-		Image bilde;
+		Image image;
 		try {
-			bilde = new Image(filbane);
+			image = new Image(filepath);
 		} catch (Exception e) {
-			System.out.println("[lastImageViewFraFil] ERROR: " + e.getMessage() + "\nFIL: " + filbane);
+			System.out.println("[loadImageViewFromFile] ERROR: " + e.getMessage() + "\nFIL: " + filepath);
 			return null;
 		}
-		return bilde;
+		return image;
 	}
 }

@@ -5,6 +5,7 @@ package TicTacToe.GameLogic;
  */
 public enum GameColor
 {
+	UNDEFINED,
 	BLUE,
 	RED;
 	public GameColor nextPlayer() {
