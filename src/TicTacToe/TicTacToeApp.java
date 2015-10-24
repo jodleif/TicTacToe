@@ -5,8 +5,10 @@ import TicTacToe.GUI.ImageLoader;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -16,7 +18,7 @@ import javafx.stage.Stage;
 public class TicTacToeApp extends Application
 {
 	public static final int WIDTH = 600;
-	public static final int HEIGHT = 600;
+	public static final int HEIGHT = 620;
 	Group root;
 	VBox vBox;
 	GUIBoard guiBoard;
@@ -35,12 +37,24 @@ public class TicTacToeApp extends Application
 		// Add gui elements
 		root.getChildren().add(vBox);
 		vBox.getChildren().add(gridPane);
+		addStatusField();
 
 		// show scene.
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
 
+	}
+
+	private void addStatusField()
+	{
+		HBox hBox = new HBox();
+		Button reset = new Button("New game");
+		reset.setOnAction(e -> guiBoard.reset());
+		hBox.setPrefHeight(20);
+		hBox.getChildren().add(reset);
+		hBox.getChildren().add(guiBoard.getStatusField());
+		vBox.getChildren().add(hBox);
 	}
 
 	public void addBackgroundImage()

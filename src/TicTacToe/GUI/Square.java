@@ -25,9 +25,14 @@ public class Square extends Pane
 	}
 
 
-	public void addImageView(ImageView iv)
+	private void addImageView(ImageView iv)
 	{
 		getChildren().add(iv);
+	}
+
+	private void removeImageView(ImageView iv)
+	{
+		getChildren().remove(iv);
 	}
 
 	public void setImage(Image img){
@@ -35,7 +40,10 @@ public class Square extends Pane
 			imgV = new ImageView();
 			imgV.setImage(img);
 			addImageView(imgV);
-		};
+		} else if (imgV!=null){
+			removeImageView(imgV);
+			imgV = null;
+		}
 	}
 
 	public void debugIdent() {
