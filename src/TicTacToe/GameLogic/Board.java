@@ -9,8 +9,8 @@ import java.util.Arrays;
  */
 public class Board
 {
-	GameColor[] pieces;
 	public static final int FIELDS = 3;
+	GameColor[] pieces;
 	private GameColor playerTurn;
 	private GameState gameState;
 
@@ -135,9 +135,9 @@ public class Board
 			case UNDECIDED:
 				return 0;
 			case REDWIN:
-				return (forPlayer==GameColor.RED) ? 10 : -10;
+				return (forPlayer == GameColor.RED) ? 100 : -100;
 			case BLUEWIN:
-				return (forPlayer==GameColor.BLUE) ? 10 : -10;
+				return (forPlayer == GameColor.BLUE) ? 100 : -100;
 			case DRAW:
 				return 0;
 			default:

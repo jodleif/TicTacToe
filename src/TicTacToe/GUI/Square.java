@@ -3,6 +3,8 @@ package TicTacToe.GUI;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 
 /**
@@ -10,8 +12,10 @@ import javafx.scene.layout.Pane;
  */
 public class Square extends Pane
 {
+	int x, y;
 	private ImageView imgV;
-	int x,y;
+	private Rectangle rec;
+	private boolean marked;
 
 	public Square(double dimension, int x, int y)
 	{
@@ -19,6 +23,10 @@ public class Square extends Pane
 		setPrefWidth(dimension);
 		this.x = x;
 		this.y = y;
+		rec = new Rectangle(200, 200);
+		getChildren().add(rec);
+		rec.setFill(Color.AQUA);
+		rec.setOpacity(0d);
 		/*setOnMouseClicked(e -> {
 			debugIdent();
 		});*/
@@ -33,6 +41,17 @@ public class Square extends Pane
 	private void removeImageView(ImageView iv)
 	{
 		getChildren().remove(iv);
+	}
+
+	public void markSquare()
+	{
+		if (marked) {
+			marked = false;
+			rec.setOpacity(0d);
+		} else {
+			rec.setOpacity(0.5d);
+			marked = true;
+		}
 	}
 
 	public void removeImage()

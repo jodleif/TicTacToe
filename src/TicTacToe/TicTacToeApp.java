@@ -2,8 +2,6 @@ package TicTacToe;
 
 import TicTacToe.GUI.GUIBoard;
 import TicTacToe.GUI.ImageLoader;
-import TicTacToe.GameLogic.AI.datastruct.Node;
-import TicTacToe.GameLogic.Board;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -25,6 +23,12 @@ public class TicTacToeApp extends Application
 	VBox vBox;
 	GUIBoard guiBoard;
 
+	public static void main(String[] args)
+	{
+		launch(args);
+		System.exit(0);
+	}
+
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
@@ -44,7 +48,7 @@ public class TicTacToeApp extends Application
 		// show scene.
 		primaryStage.setScene(scene);
 		primaryStage.show();
-
+		primaryStage.setTitle("TicTacToe");
 
 
 	}
@@ -66,10 +70,5 @@ public class TicTacToeApp extends Application
 		if(iv!=null){
 			root.getChildren().add(iv);
 		}
-	}
-	public static void main(String[] args)
-	{
-		launch(args);
-		System.exit(0);
 	}
 }
