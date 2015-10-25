@@ -1,6 +1,9 @@
 package TicTacToe.GameLogic;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by Jo Øivind Gjernes on 24.10.2015.
  */
@@ -16,6 +19,13 @@ public class Board
 		playerTurn = GameColor.RED;
 		gameState = GameState.UNDECIDED;
 		buildBoard();
+	}
+
+	private Board(GameColor pieces[], GameColor playerTurn, GameState gameState)
+	{
+		this.pieces = pieces;
+		this.playerTurn = playerTurn;
+		this.gameState = gameState;
 	}
 
 	public boolean putPiece(int x, int y){
@@ -43,7 +53,7 @@ public class Board
 			return false;
 		if(getPiece(x,y)!=GameColor.UNDEFINED)
 			return false;
-		return true;
+		return checkForWinner()==GameState.UNDECIDED;
 	}
 
 	public GameState checkForWinner()
@@ -98,6 +108,41 @@ public class Board
 
 	public GameColor getPlayerTurn() {
 		return playerTurn;
+	}
+
+	public Board getBoardState()
+	{
+		return new Board(Arrays.copyOf(pieces, 9), playerTurn, gameState);
+	}
+
+
+	public ArrayList<Move> getPossibleMoves()
+	{
+		ArrayList<Move> possibleMoves = new ArrayList<>();
+		for(int y=0;y<FIELDS;++y){
+			for (int x = 0; x < FIELDS; x++) {
+				if(checkValidCoord(x,y)){
+					possibleMoves.add(new Move(x, y, playerTurn));
+				}
+			}
+		}
+		return possibleMoves;
+	}
+
+	public int evaluate(GameColor forPlayer)
+	{
+		switch(gameState){
+			case UNDECIDED:
+				return 0;
+			case REDWIN:
+				return (forPlayer==GameColor.RED) ? 10 : -10;
+			case BLUEWIN:
+				return (forPlayer==GameColor.BLUE) ? 10 : -10;
+			case DRAW:
+				return 0;
+			default:
+				return 0;
+		}
 	}
 
 

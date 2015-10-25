@@ -1,5 +1,6 @@
 package TicTacToe.GUI;
 
+import TicTacToe.GameLogic.AI.MaxMin;
 import TicTacToe.GameLogic.Board;
 import TicTacToe.GameLogic.GameColor;
 import javafx.scene.control.Label;
@@ -21,6 +22,8 @@ public class GUIBoard
 	private Square[][] squares;
 	private Image redCircle;
 	private Image blueCross;
+	private MaxMin aiPlayer;
+	private GameColor playerColor;
 
 	public GUIBoard(){
 		gameBoard = new Board();
@@ -29,10 +32,12 @@ public class GUIBoard
 		statusField = new Label();
 		redCircle = ImageLoader.loadImageFromFile("img/circle.png");
 		blueCross = ImageLoader.loadImageFromFile("img/cross.png");
+		playerColor = GameColor.RED;
+		aiPlayer = new MaxMin(7,playerColor.nextPlayer());
 		initGUI();
 		refreshStatus();
 		gridPane.setOnMouseClicked(e -> markFromMouse(e.getX(), e.getY()));
-
+		aiTrekk();
 	}
 
 	private void initGUI()
@@ -50,7 +55,8 @@ public class GUIBoard
 	{
 		for (int i = 0; i < Board.FIELDS; i++) {
 			for (int j = 0; j < Board.FIELDS; j++) {
-				setSquareImage(gameBoard.getPiece(i,j),i,j);
+				GameColor gc = gameBoard.getPiece(j,i);
+				setSquareImage(gc,j,i);
 			}
 		}
 	}
@@ -62,17 +68,24 @@ public class GUIBoard
 
 	private void setSquareImage(GameColor gc, int x, int y)
 	{
-		squares[y][x].setImage(fromColor(gc));
+		if(gc!=GameColor.UNDEFINED) {
+			squares[y][x].setImage(fromColor(gc));
+		} else {
+			squares[y][x].removeImage();
+		}
 	}
 
 	private void markFromMouse(double x, double y){
-		int xCoord = (int)(x*(3d/600d));
-		int yCoord = (int)(y*(3d/600d));
-		System.out.println(xCoord+","+yCoord);
-		if(gameBoard.putPiece(xCoord,yCoord)){
-			checkState();
-			refreshOne(xCoord,yCoord);
-			refreshStatus();
+		if(gameBoard.getPlayerTurn()==playerColor) {
+			int xCoord = (int) (x * (3d / 600d));
+			int yCoord = (int) (y * (3d / 600d));
+			System.out.println(xCoord + "," + yCoord);
+			if (gameBoard.putPiece(xCoord, yCoord)) {
+				checkState();
+				refreshOne(xCoord, yCoord);
+				refreshStatus();
+				aiTrekk();
+			}
 		}
 	}
 
@@ -119,6 +132,18 @@ public class GUIBoard
 		gameBoard = new Board();
 		refresh();
 		refreshStatus();
+		aiTrekk();
+		aiPlayer=new MaxMin(15, playerColor.nextPlayer());
 	}
 
+	private void aiTrekk()
+	{
+		if(gameBoard.getPlayerTurn()!=playerColor){
+			setStatusField("AI TENKER");
+			gameBoard = aiPlayer.aiMove(gameBoard).doMove(gameBoard);
+			checkState();
+			refresh();
+			refreshStatus();
+		}
+	}
 }

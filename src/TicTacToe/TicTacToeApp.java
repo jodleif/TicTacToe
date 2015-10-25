@@ -2,6 +2,8 @@ package TicTacToe;
 
 import TicTacToe.GUI.GUIBoard;
 import TicTacToe.GUI.ImageLoader;
+import TicTacToe.GameLogic.AI.datastruct.Node;
+import TicTacToe.GameLogic.Board;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -42,6 +44,7 @@ public class TicTacToeApp extends Application
 		// show scene.
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
 
 
 	}
